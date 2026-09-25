@@ -86,6 +86,9 @@ async def test_01_rename_when_admin_email_changed_to_fresh_email():
     orig_hash = admin_before["password_hash"]
     orig_ver = admin_before.get("token_version", 0)
     orig_org = admin_before["organization_id"]
+    orig_name = admin_before.get("name")
+    orig_title = admin_before.get("title")
+    orig_created = admin_before.get("created_at")
 
     fresh_email = f"tmp-admin-{uuid.uuid4().hex[:8]}@tugmatest.local"
     # Assert fresh doesn't already exist
@@ -102,27 +105,33 @@ async def test_01_rename_when_admin_email_changed_to_fresh_email():
         count = await _admin_count()
         assert count == 1, f"Duplicate ADMIN created; count={count}"
 
-        # Same id, new email, preserved fields
+        # Same id, new email, new display name, other fields preserved
         renamed = await _get_admin_by_email(fresh_email)
         assert renamed is not None, "Renamed admin not found"
         assert renamed["id"] == orig_id
+        assert renamed["name"] == "Chris Icalla", "Display name not updated on rename"
         assert renamed["password_hash"] == orig_hash
         assert renamed["role"] == "ADMIN"
+        assert renamed.get("title") == orig_title
         assert renamed["organization_id"] == orig_org
         assert renamed.get("token_version", 0) == orig_ver
+        assert renamed.get("created_at") == orig_created
 
         # Original email no longer exists
         assert await _get_admin_by_email(ORIGINAL_ADMIN_EMAIL) is None
     finally:
-        # Restore: rename back via seed_users using original email
+        # Restore: rename back to original email, then reset display name
+        # (the rename branch also sets name to "Chris Icalla").
         os.environ["ADMIN_EMAIL"] = ORIGINAL_ADMIN_EMAIL
         os.environ["ADMIN_PASSWORD"] = ORIGINAL_ADMIN_PASSWORD
         await seed_users()
+        await _db().users.update_one({"id": orig_id}, {"$set": {"name": orig_name}})
 
     # Verify restored
     restored = await _get_admin_by_email(ORIGINAL_ADMIN_EMAIL)
     assert restored is not None, "Failed to restore admin email"
     assert restored["id"] == orig_id
+    assert restored["name"] == orig_name
     assert restored["password_hash"] == orig_hash
     assert await _admin_count() == 1
 

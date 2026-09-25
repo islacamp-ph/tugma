@@ -334,7 +334,8 @@ async def seed_users():
         # Rename the single existing demo-org ADMIN rather than create a duplicate.
         admins = await db.users.find({"organization_id": DEMO_ORG_ID, "role": "ADMIN"}).to_list(2)
         if len(admins) == 1:
-            await db.users.update_one({"id": admins[0]["id"]}, {"$set": {"email": admin_email}})
+            await db.users.update_one({"id": admins[0]["id"]},
+                                      {"$set": {"email": admin_email, "name": "Chris Icalla"}})
         else:
             await db.users.insert_one({
                 "id": str(uuid.uuid4()), "email": admin_email,
