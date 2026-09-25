@@ -168,7 +168,7 @@ export default function Home() {
               <ArrowRight className="h-3 w-3 text-sky-500" />
               <span className="rounded border border-slate-700 px-2 py-1">Stellar</span>
               <ArrowRight className="h-3 w-3 text-sky-500" />
-              <span className="rounded border border-emerald-500/40 px-2 py-1 text-emerald-300">Verified</span>
+              <span className="rounded border border-emerald-500/40 px-2 py-1 text-emerald-300">Verify</span>
             </div>
           </div>
           <CodePanel testid="code-panel-evidence" title="evidence_verify.py" lines={EVIDENCE_CODE.map(highlight)} />
