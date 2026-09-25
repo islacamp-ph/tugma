@@ -142,9 +142,9 @@ export default function Home() {
             <p className="font-mono text-xs uppercase tracking-widest text-sky-400">CTRL-005</p>
             <h3 className="mt-2 font-heading text-xl font-semibold text-slate-100">Settlement Reconciliation</h3>
             <dl className="mt-6 space-y-3 font-mono text-sm">
-              <Row k="transactions" v="10,000" />
-              <Row k="passed" v="9,873" tone="text-emerald-300" />
-              <Row k="exceptions" v="127" tone="text-rose-300" />
+              <Row k="tests" v="processor vs settlement" />
+              <Row k="on breach" v="raises exception" tone="text-slate-200" />
+              <Row k="evidence" v="required for resolution" tone="text-slate-200" />
             </dl>
             <div className="mt-6 inline-flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5">
               <span className="h-2 w-2 rounded-full bg-emerald-400" />
@@ -156,10 +156,11 @@ export default function Home() {
         <div className="mt-6 grid gap-6 lg:grid-cols-2 lg:items-center">
           <div className="order-2 rounded-xl border border-slate-800 bg-slate-900/50 p-8 lg:order-1">
             <p className="font-mono text-xs uppercase tracking-widest text-slate-500">Evidence Completeness</p>
-            <p className="mt-3 font-heading text-5xl font-bold text-slate-50">87%</p>
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-800">
-              <div className="h-full rounded-full bg-sky-500" style={{ width: "87%" }} />
-            </div>
+            <p className="mt-3 font-heading text-2xl font-semibold text-slate-100">Measured, never assumed</p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+              TUGMA tracks whether each exception is backed by the evidence required to prove resolution—so
+              completeness reflects your actual records, not a fixed figure.
+            </p>
             <div className="mt-8 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-slate-400">
               <span className="rounded border border-slate-700 px-2 py-1">Evidence Package</span>
               <ArrowRight className="h-3 w-3 text-sky-500" />
